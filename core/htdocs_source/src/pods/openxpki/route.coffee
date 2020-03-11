@@ -55,10 +55,19 @@ Route = Em.Route.extend
 
         source = @get "source"
         source.set "page", req.model_id
-        @sendAjax
-            data: data
-        .then (doc) ->
-            source
+
+        if req.ticket && req.model_id == "login"
+            data.ticket = req.ticket
+            req.ticket = null
+            @sendAjax
+                data: data
+            .then (doc) ->
+                source
+        else
+            @sendAjax
+                data: data
+            .then (doc) ->
+                source
 
     doPing: (cfg) ->
         @set "source.ping", Em.run.later(@, =>

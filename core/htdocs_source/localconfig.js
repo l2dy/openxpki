@@ -1,3 +1,13 @@
+window.Em.Application.initializer({
+    name: "oxi-cas",
+    initialize: function() {
+        if (window.location.search.includes("ticket=") && window.location.hash.includes("/login")) {
+            window.location.hash += window.location.search;
+            window.location.search = "";
+        }
+    }
+});
+
 /* Use the following template to add new format helpers.
  *
  * The example adds a helper called upper that make the value all caps.

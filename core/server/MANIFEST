@@ -315,6 +315,7 @@ OpenXPKI/Server/Session/Driver/File.pm
 OpenXPKI/Server/Session/Driver/Memory.pm
 OpenXPKI/Server/Authentication.pm
 OpenXPKI/Server/Authentication/Anonymous.pm
+OpenXPKI/Server/Authentication/CAS.pm
 OpenXPKI/Server/Authentication/ClientSSO.pm
 OpenXPKI/Server/Authentication/External.pm
 OpenXPKI/Server/Authentication/Password.pm

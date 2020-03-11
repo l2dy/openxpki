@@ -482,9 +482,19 @@ sub handle_login {
         # Never auth with an internal stack!
         if ( $auth_stack && $auth_stack !~ /^_/) {
             $self->logger()->debug("Authentication stack: $auth_stack");
-            $reply = $self->backend()->send_receive_service_msg( 'GET_AUTHENTICATION_STACK', {
-               AUTHENTICATION_STACK => $auth_stack
-            });
+            if ($auth_stack eq 'CAS') {
+                my $ticket = $cgi->param('ticket') || '';
+                my $casURL = $self->_config()->{loginurl};
+                $reply = $self->backend()->send_receive_service_msg( 'GET_AUTHENTICATION_STACK', {
+                    AUTHENTICATION_STACK => $auth_stack,
+                    TICKET => $ticket,
+                    CAS_URL => $casURL,
+                });
+            } else {
+                $reply = $self->backend()->send_receive_service_msg( 'GET_AUTHENTICATION_STACK', {
+                    AUTHENTICATION_STACK => $auth_stack
+                });
+            }
             $status = $reply->{SERVICE_MSG};
         } else {
             my $stacks = $reply->{'PARAMS'}->{'AUTHENTICATION_STACKS'};
